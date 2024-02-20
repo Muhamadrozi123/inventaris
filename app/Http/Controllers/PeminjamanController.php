@@ -11,7 +11,7 @@ class PeminjamanController extends Controller
 {
     public function index()
     {
-        $peminjaman = Peminjaman::paginate(5);
+        $peminjaman = Peminjaman::paginate(2);
         $datas = Siswa::all();
         $datagambars = barang::all();
         return view('peminjaman.index', compact('peminjaman', 'datas', 'datagambars'));
@@ -20,8 +20,9 @@ class PeminjamanController extends Controller
     {
         $barang = Barang::all();
         $siswa = Siswa::all();
-        // dd($peminjamans);
-        return view('peminjaman.create', compact('barang', 'siswa'));
+        $peminjaman = Peminjaman::with(['siswa'])->get();
+        // dd($peminjaman);
+        return view('peminjaman.create', compact('barang', 'siswa','peminjaman'));
     }
     public function store(Request $request)
     {

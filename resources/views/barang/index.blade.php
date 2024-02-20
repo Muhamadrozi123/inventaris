@@ -7,6 +7,16 @@
                 <div class="card border-0 shadow rounded">
                     <div class="card-body">
                         <a href="{{ route('barang.create') }}" class="btn btn-md btn-success mb-3">TAMBAH BARANG </a>
+                        {{-- saaat sukses --}}
+                        @if(session('success'))
+                        <div class="alert alert-success">{{ session('success') }}</div>
+                        @endif
+                        {{-- akhir sukses --}}
+                        {{-- saat error --}}
+                        @if(session('error'))
+                        <div class="alert alert-danger">{{ session('error') }}</div>
+                        @endif
+                        {{-- akhir error --}}
                         <table class="table table-bordered">
                             <thead>
                                 <tr>

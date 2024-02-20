@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Peminjaman;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Barang; // Import model Barang di sini
@@ -81,16 +82,30 @@ class BarangController extends Controller
 
     public function destroy($id)
     {
-        $barang = Barang::find($id);
+        // $barang = Barang::find($id);
 
         
-        // Hapus gambar dari penyimpanan (storage)
-        Storage::delete('storage/posts/' . $barang->gambar);
-        $barang->delete();
+        // // Hapus gambar dari penyimpanan (storage)
+        // Storage::delete('storage/posts/' . $barang->gambar);
+        // $barang->delete();
 
-        // Hapus barang dari database
+        // // Hapus barang dari database
 
-        // Redirect ke index atau rute lainnya
-        return redirect()->route('barang.index')->with('success', 'Barang berhasil dihapus');
+        // // Redirect ke index atau rute lainnya
+        // return redirect()->route('barang.index')->with('success', 'Barang berhasil dihapus');
+        $barang = Barang::find($id);
+        if ($barang) {
+            // Periksa apakah barang masih dipakai dalam peminjaman
+            $p = Peminjaman::where('id_barang', $barang->id)->exists();
+            // dd($p);
+            if ($p) {
+                return redirect('/barang')->with('error', 'Data barang masih dipakai dan tidak dapat dihapus!');
+            }
+
+            // Jika tidak dipakai, hapus gambar dan hapus barang
+            Storage::delete('public/images/' . $barang->gambar);
+            $barang->delete();
+            return redirect()->route('barang.index')->with('success', 'Barang berhasil dihapus');
+        }
     }
 }

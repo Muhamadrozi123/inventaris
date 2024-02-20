@@ -14,7 +14,7 @@
                             <select class="form-select" name="id_siswa">
                                 <option disabled selected>Pilih Siswa</option>
                                 @foreach ($siswa as $item)
-                                    <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                                    <option value="{{ $item->id }}" {{ $item->id == $peminjaman->siswa->id ? 'selected' : '' }}>{{ $item->nama }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -23,20 +23,20 @@
                                 <select class="form-select" name="id_barang">
                                     <option disabled selected>Pilih Barang</option>
                                     @foreach ($barang as $item)
-                                        <option value="{{ $item->id }}">{{ $item->barang }}</option>
+                                        <option value="{{ $item->id }}" {{ $item->id == $peminjaman->barang->id ? 'selected' : '' }}>{{ $item->barang }}</option>
                                     @endforeach
                                 </select>
                         </div>
                         <div class="mb-3">
                             <label for="tgl_pinjam" class="form-label">Tanggal Pinjam</label>
-                            <input type="date" class="form-control @error('tgl_pinjam') is-invalid @enderror" id="tgl_pinjam" name="tgl_pinjam" value="{{ old('tgl_pinjam') }}">
+                            <input type="date" class="form-control @error('tgl_pinjam') is-invalid @enderror" id="tgl_pinjam" name="tgl_pinjam" value="{{ old('tgl_pinjam', $peminjaman->tgl_pinjam) }}">
                             @error('tgl_pinjam')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="mb-3">
                             <label for="tgl_kembali" class="form-label">Tanggal Kembali</label>
-                            <input type="date" class="form-control @error('tgl_kembali') is-invalid @enderror" id="tgl_kembali" name="tgl_kembali" value="{{ old('tgl_kembali') }}">
+                            <input type="date" class="form-control @error('tgl_kembali') is-invalid @enderror" id="tgl_kembali" name="tgl_kembali" value="{{ old('tgl_kembali', $peminjaman->tgl_kembali) }}">
                             @error('tgl_kembali')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror

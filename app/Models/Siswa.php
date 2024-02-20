@@ -11,7 +11,7 @@ class Siswa extends Model
     // Protected $table = 'siswas';
     Protected $fillable =['nama','kelas',];
 
-    public function pembayaran() {
+    public function peminjaman() {
         return $this->hasMany(Peminjaman::class, 'id_siswa');
     }
 }
